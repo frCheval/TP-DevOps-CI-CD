@@ -40,9 +40,11 @@ databse: db
 Pour ajouter des données au démarrage on copie des script sql dans le dossier /docker-entrypoint-initdb.d de notre conteneur. Pour cela, on ajoute les lignes suivantes au DockerFile :
 
 ```COPY CreateSchema.sql /docker-entrypoint-initdb.d/
-COPY InsertData.sql /docker-entrypoint-initdb.d/ ```
+COPY InsertData.sql /docker-entrypoint-initdb.d/ 
+```
 
 On souhaite persister les données en cas de destruction de notre conteneur. Pour cela on complète notre commande docker run avec l'attribut suivant :
+
 ```-v volume:/var/lib/postgresql/data```
 
 Cela bin notre dossier volume en local au dossier /var/lib/postgresql/data de notre conteneur
@@ -53,13 +55,15 @@ Après inspection de la plateforme openjdk sur dockerhub, on choisit de copier l
 
 ```docker pull openjdk:11-jre```
 
-On constitue notre fichier Dockerfile, après avoir généré le fichier. class à l'aide de la commande ```javac Main.java```
+On constitue notre fichier Dockerfile, après avoir généré le fichier. class à l'aide de la commande 
+```javac Main.java```
 
 On copie sur dans le conteneur le fichier class et on run notre application.
 
 Au final on a un Dockerfile de ce site :
 
-``
+```
+
 #image de base
 FROM openjdk:11-jre
 
@@ -68,7 +72,7 @@ COPY Main.class /
 
 #Compiled class
 RUN java Main
-``
+```
 
 On build notre image avec la commande suivante :
 
