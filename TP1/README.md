@@ -130,3 +130,25 @@ ENTRYPOINT java -jar myapp.jar
 On copie le point jar au point endroit et on le définit en tant que point d'entrée à executer.
 
 ## http-server
+
+On peut se fier à la documentation sur docker hub pour l'image httpd :
+https://hub.docker.com/_/httpd
+
+On construit le Dockerfile suivant :
+```
+FROM httpd:2.4
+COPY ./public-html/ /usr/local/apache2/htdocs/
+```
+
+On met le fichier html dans le dossier public-html et on build notre image avec la commande suivante :
+``` docker build -t fcheval/http-serve-tp1 .```
+
+et on lance notre conteneur avec la commande 
+```docker run -d --net=app-network -p 80:80 --name http-serve-tp1 fcheval/http-serve-tp1```
+
+Si on veut afficher la conf httpd, on peut utiliser la commande 
+```docker exec -it http-serve-tp1 cat /usr/local/apache2/conf/httpd.conf ```
+
+ou on peut copier la fichier pour le modifier en local avec la commande suivante 
+``` docker cp http-serve-tp1:/usr/local/apache2/conf/httpd.conf . ```
+
