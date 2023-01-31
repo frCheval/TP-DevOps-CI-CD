@@ -198,3 +198,23 @@ On remarque qu'on a set le `project key` à `-Dsonar.projectKey=` et le l'`organ
 On trouve bien le projet sur sonarcloud: https://sonarcloud.io/dashboard?id=frCheval_TP-DevOps-CI-CD. On voit qu'il y a 53.6% de coverage, 0 bugs, 2 code smells et 2 vulnerabilities.     
     
 En général dans un projet réel le coverage doit être au dessus de 80%, le projet ne serait donc pas accepté. 
+
+## 6 (Optionnel) Split pipelines
+
+Très généralement, on encadre fortement l'action des pipelines pour eviter des livraisons impromptus par exemple.
+
+Dans notre exemple, on souhaite push uniquement sur la branche main, lorsque les tests sont passés, mais on doit tout de même pouvoir effectuer des tests sur develop et main.
+
+Pour faire cela on doit séparer la partie CI de la partie CD en recréant un second fichier yaml. Dans notre exemple on crée un second yaml appelé build-and-push.yaml.
+
+Il contient la partie de build and push vu précedemment. Pour qu'il se lance uniquement sur la branche main et qu'il s'execute après les tests, uniquement s'ils passent, on y met la configuration suivante au début :
+
+```yaml
+name: cd-devops-2023
+on:
+  workflow_run:
+    workflows: ["ci-devops-2023"]
+    types: [completed]
+    branches:
+      - 'main'
+```
