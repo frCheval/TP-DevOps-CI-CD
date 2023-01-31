@@ -152,3 +152,6 @@ Si on veut afficher la conf httpd, on peut utiliser la commande
 ou on peut copier la fichier pour le modifier en local avec la commande suivante 
 ``` docker cp http-serve-tp1:/usr/local/apache2/conf/httpd.conf . ```
 
+Pour la suite du tp, on décide de  simplifier la gestion de nos conteneurs en utilisant docker-compose. 
+
+La suite se trouve [ici](../TP1-Compose/)
