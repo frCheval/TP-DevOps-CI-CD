@@ -45,7 +45,7 @@ jobs:
           # relative path to the place where source code with Dockerfile is located
           context: ./TP2/backend
           # Note: tags has to be all lower-case
-          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops/backend
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp1-compose-backend-tp:1.0
           push: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Build image and push database
@@ -54,7 +54,7 @@ jobs:
           # relative path to the place where source code with Dockerfile is located
           context: ./TP2/frontend
           # Note: tags has to be all lower-case
-          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops/frontend
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp1-compose-frontend-tp:1.0
           push: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Build image and push httpd
@@ -63,5 +63,5 @@ jobs:
           # relative path to the place where source code with Dockerfile is located
           context: ./TP2/postgresql
           # Note: tags has to be all lower-case
-          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops/postgresql
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp1-compose-postgres-tp:1.0
           push: ${{ github.ref == 'refs/heads/main' }}
