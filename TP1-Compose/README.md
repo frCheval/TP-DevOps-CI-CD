@@ -39,8 +39,7 @@ docker tag tp1-compose_postgres-tp xgauchoux/tp1-compose_postgres-tp:1.0
 docker push xgauchoux/tp1-compose_postgres-tp:1.0
 ```
     
-Resultat:
-![alt text]((https://github.com/frCheval/TP-DevOps-CI-CD/tree/main/TP1-Compose/blob/publish.png?raw=true))
+Resultat: https://hub.docker.com/repositories/xgauchoux
 
 
 
