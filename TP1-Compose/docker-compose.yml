@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+
+  postgres-tp:
+    build: ./postgresql
+    volumes:
+      - ./postgresql/data:/var/lib/postgresql/saved-data
+      - ./postgresql/pg-init-scripts:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - app-network
+      
+  backend-tp:
+    build: ./backend
+    networks:
+      - app-network
+    depends_on:
+      - postgres-tp
+      
+  frontend-tp:
+    build: ./frontend
+    ports:
+      - 80:80
+    networks:
+      - app-network
+    depends_on:
+      - postgres-tp
+    
+networks:
+  app-network:
+    name: app-network
