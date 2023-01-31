@@ -4,6 +4,7 @@ services:
 
   postgres-tp:
     build: ./postgresql
+    container_name: devops_postgres-tp_1
     volumes:
       - ./postgresql/data:/var/lib/postgresql/saved-data
       - ./postgresql/pg-init-scripts:/docker-entrypoint-initdb.d
@@ -15,6 +16,7 @@ services:
       
   backend-tp:
     build: ./backend
+    container_name: devops_backend-tp_1
     networks:
       - app-network
     depends_on:
@@ -22,6 +24,7 @@ services:
       
   frontend-tp:
     build: ./frontend
+    container_name: devops_frontend-tp_1
     ports:
       - 80:80
     networks:
