@@ -29,6 +29,19 @@ Ensuite une liste de `service` est créée. Chaque service est défini par un no
 * `depends_on`, qui permet de définir les dépendances entre les containers
 * `command`, qui permet de définir la commande à exécuter au lancement du container
 
+## 1.5 - Docker Publish Image
+
+Avant de pouvoir push une image il faut la tagger. Pour cela on trouve une image docker avec `docker images` et ensuite on tag l'image avec `docker tag <image> <user>/<image>:<tag>`. On peut ensuite push l'image avec `docker push <user>/<image>:<tag>`.
+
+```
+docker images
+docker tag tp1-compose_postgres-tp xgauchoux/tp1-compose_postgres-tp:1.0
+docker push xgauchoux/tp1-compose_postgres-tp:1.0
+```
+    
+Resultat:
+![alt text]((https://github.com/frCheval/TP-DevOps-CI-CD/tree/main/TP1-Compose/blob/publish.png?raw=true))
+
 
 
 
