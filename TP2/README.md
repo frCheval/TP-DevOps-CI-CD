@@ -4,5 +4,11 @@
 
 Ce sont des librairies java qui permettent de lancer un ensemble de containers docker pendant les tests. Ici nous utilisons le container postgresql pour l'attacher à notre application pendant les tests.
 
+## 2 CI
 
+Documenter ligne 
+
+Parler erreur de build du trouver jdk correspondant (https://github.com/actions/setup-java)
+
+## 3 CD
 
