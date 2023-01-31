@@ -152,7 +152,33 @@ Elle est définit de cette manière :
 ```
 
 Dans cette étape, on execute la commande docker login. Les credentials utilisés sont des variables secrètes du repository, enregistré au préalable. 
-La variable **DOCKERHUB_USERNAME** correspond au nom d'utilisateur
+La variable **DOCKERHUB_USERNAME** correspond au nom d'utilisateur de l'utilisateur qui va stocker les images sur Docker Hub.
+La variable **DOCKERHUB_TOKEN** correspond à un token généré par Docker Hub pour l'utilisateur. Dans notre cas, le token utilisé est un token généré pour permmettre uniquement la lecture et l'écriture sur les images.
+
+### 4.3 Build and push
+
+Les trois dernières étapes sont le build et push de notre image. Puisque ces étapes sont similaires, j'expliquerai le principe de ces étapes en prenant en exemple la première étape de ce type.
+
+Elle se décrit de cette manière :
+```yaml
+      - name: Build image and push backend
+        uses: docker/build-push-action@v3
+        with:
+          # relative path to the place where source code with Dockerfile is located
+          context: ./TP2/backend
+          # Note: tags has to be all lower-case
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp1-compose-backend-tp:1.0
+          push: ${{ github.ref == 'refs/heads/main' }}
+
+```
+
+Chaque étape utilise l'action docker/build-push pour etre effectuer.
+L'attribut ```with``` permet d'ajouter des variables à notre étape
+
+On inclue le Dockerfile qui décrit l'initialisation de l'image grace à la variable ```context```.
+La variable ```tags``` définit le tag de l'image à-partir d'un username DockerHub et du nom de l'image que l'on souhaite push.
+
+L'attribut ```push``` permet de définir une condition de push de l'image sur Docker Hub : elle n'est push que le commit a lieu sur la branche main.
 
 ## 5 Quality Gate
 
