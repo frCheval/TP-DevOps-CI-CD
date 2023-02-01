@@ -22,15 +22,25 @@ services:
     depends_on:
       - postgres-tp
       
-  frontend-tp:
-    build: ./frontend
-    container_name: devops_frontend-tp_1
+  httpd-tp:
+    build: ./httpd
+    container_name: devops_httpd-tp_1
     ports:
       - 80:80
     networks:
       - app-network
     depends_on:
       - postgres-tp
+      
+  frontend-tp:
+    build: ./front
+    container_name: devops_frontend-tp_1
+    ports:
+      - 8090:8090
+    networks:
+      - app-network
+    depends_on:
+      - httpd-tp
     
 networks:
   app-network:
