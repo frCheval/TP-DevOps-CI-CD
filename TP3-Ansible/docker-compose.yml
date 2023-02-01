@@ -4,7 +4,7 @@ services:
 
   postgres-tp:
     build: ./postgresql
-    container_name: devops_postgres-tp_1
+    container_name: devops-postgres-tp-1
     volumes:
       - ./postgresql/data:/var/lib/postgresql/saved-data
       - ./postgresql/pg-init-scripts:/docker-entrypoint-initdb.d
@@ -16,7 +16,9 @@ services:
       
   backend-tp:
     build: ./backend
-    container_name: devops_backend-tp_1
+    container_name: devops-backend-tp-1
+    ports:
+      - 8080:8080
     networks:
       - app-network
     depends_on:
@@ -24,7 +26,7 @@ services:
       
   httpd-tp:
     build: ./httpd
-    container_name: devops_httpd-tp_1
+    container_name: devops-httpd-tp-1
     ports:
       - 80:80
     networks:
@@ -34,13 +36,28 @@ services:
       
   frontend-tp:
     build: ./front
-    container_name: devops_frontend-tp_1
+    container_name: devops-frontend-tp-1
     ports:
       - 8090:8090
     networks:
       - app-network
     depends_on:
       - httpd-tp
+      
+  prometheus-tp:
+    image: prom/prometheus:v2.42.0
+    container_name: devops-prometheus-tp-1
+    restart: unless-stopped
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yaml'
+    ports:
+      - 9090:9090
+    networks:
+      - app-network
+    depends_on:
+      - backend-tp
     
 networks:
   app-network:
