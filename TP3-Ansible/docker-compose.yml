@@ -44,8 +44,6 @@ services:
   frontend-tp:
     build: ./front
     container_name: devops-frontend-tp-1
-    ports:
-      - 8090:8090
     networks:
       - app-network
     depends_on:
