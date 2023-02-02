@@ -1,0 +1,70 @@
+- hosts: all
+  gather_facts: false
+  become: yes
+  roles:
+    - docker
+
+# Install Docker
+  tasks:
+  - name: Clean packages
+    command:
+      cmd: dnf clean -y packages
+
+  - name: Install device-mapper-persistent-data
+    dnf:
+      name: device-mapper-persistent-data
+      state: latest
+
+  - name: Install lvm2
+    dnf:
+      name: lvm2
+      state: latest
+
+  - name: add repo docker
+    command:
+      cmd: sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+
+  - name: Install Docker
+    dnf:
+      name: docker-ce
+      state: present
+
+  - name: install python3
+    dnf:
+      name: python3
+
+  - name: Pip install
+    pip:
+      name: docker
+
+  - name: Make sure Docker is running
+    service: name=docker state=started
+    tags: docker
+
+#Creation of network
+  - name: Create a network
+    community.docker.docker_network:
+      name: app_network
+
+#Creation of database
+  - name: Create db container and connect to network
+    community.docker.docker_container:
+      name: db_test
+      image: "postgres:latest"
+      networks:
+        - name: "{{ docker_network_name }}"
+
+  - name: Restart a container
+    community.docker.docker_container:
+      name: myapplication
+      image: fcheval/appimage
+      env:
+          SECRET_KEY: "ssssh"
+          # Values which might be parsed as numbers, booleans or other types by the YAML parser need to be quoted
+          BOOLEAN_KEY: "yes"
+
+#Launch proxy
+  - name: Run HTTPD
+    docker_container:
+      name: httpd
+      image: jdoe/my-httpd:1.0
