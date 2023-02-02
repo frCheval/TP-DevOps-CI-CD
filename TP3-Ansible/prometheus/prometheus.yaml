@@ -3,6 +3,6 @@ scrape_configs:
     metrics_path: '/actuator/prometheus'
     scrape_interval: 2s
     static_configs:
-      - targets: ['devops-backend-tp-1:8080']
+      - targets: ['devops-backend-tp-1:8080','devops-backend-tp-2:8080']
         labels:
           application: 'Spring Boot Application'

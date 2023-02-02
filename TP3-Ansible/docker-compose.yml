@@ -26,7 +26,9 @@ services:
   
   backend-tp-2:
     build: ./backend
-    container_name: devops-backend-tp-1
+    container_name: devops-backend-tp-2
+    ports:
+      - 8080:8080
     networks:
       - app-network
     depends_on:
@@ -65,7 +67,8 @@ services:
     networks:
       - app-network
     depends_on:
-      - backend-tp
+      - backend-tp-1
+      - backend-tp-2
     
 networks:
   app-network:
