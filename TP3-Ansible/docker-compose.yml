@@ -14,9 +14,17 @@ services:
     networks:
       - app-network
       
-  backend-tp:
+  backend-tp-1:
     build: ./backend
     container_name: devops_backend-tp_1
+    networks:
+      - app-network
+    depends_on:
+      - postgres-tp
+  
+  backend-tp-2:
+    build: ./backend
+    container_name: devops_backend-tp_2
     networks:
       - app-network
     depends_on:
