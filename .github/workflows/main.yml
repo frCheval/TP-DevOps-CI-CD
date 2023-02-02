@@ -22,4 +22,4 @@ jobs:
 
      #finally build your app with the latest command
       - name: Build and test with Maven
-        run: mvn -B verify sonar:sonar -Dsonar.projectKey=frCheval_TP-DevOps-CI-CD -Dsonar.organization=devops-2023-cheval-gauchoux -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ./TP2/backend/simple-api-student-main
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=frCheval_TP-DevOps-CI-CD -Dsonar.organization=devops-2023-cheval-gauchoux -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ./TP3-Ansible/backend/simple-api-student-main
