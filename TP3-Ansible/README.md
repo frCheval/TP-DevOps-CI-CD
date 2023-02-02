@@ -1,5 +1,9 @@
 # TP3
 
+## 1 Document your inventory and base commands
+## 2 Document your playbook
+## 3 Document your docker_container tasks configuration.
+
 # TP Extra
 
 ## Load Balancing
