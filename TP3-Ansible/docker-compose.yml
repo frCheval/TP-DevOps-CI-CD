@@ -26,7 +26,7 @@ services:
   
   backend-tp-2:
     build: ./backend
-    container_name: devops_backend-tp_2
+    container_name: devops-backend-tp-1
     networks:
       - app-network
     depends_on:
