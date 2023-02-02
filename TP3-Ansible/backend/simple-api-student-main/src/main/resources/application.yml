@@ -8,7 +8,7 @@ spring:
     generate-ddl: false
     open-in-view: true
   datasource:
-    url: jdbc:postgresql://devops_postgres-tp_1:5432/postgres
+    url: jdbc:postgresql://devops-postgres-tp-1:5432/postgres
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
