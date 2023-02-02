@@ -4,6 +4,35 @@
 
 ## Load Balancing
 
+Pour le load balancing, nous avons du apporter des modifications au docker httpd.   
+Pour cela nous avons modifier le fichier httpd.conf en ajoutant les lignes suivantes:
+
+```conf
+Listen 80
+Listen 8080
+
+...
+
+<VirtualHost *:80>
+    ProxyPreserveHost On
+    ProxyPass / http://devops-frontend-tp-1:80/
+    ProxyPassReverse / http://devops-frontend-tp-1:80/
+</VirtualHost>
+
+<VirtualHost *:8080>
+    ProxyPreserveHost On
+    Header set Access-Control-Allow-Origin "*"
+    <Proxy balancer://mycluster>
+        BalancerMember "http://devops-backend-tp-1:8080"
+        BalancerMember "http://devops-backend-tp-2:8080"
+    </Proxy>
+    ProxyPass / balancer://mycluster/
+    ProxyPassReverse / balancer://mycluster/
+</VirtualHost>
+```
+
+EXPLICATION DES LIGNES
+
 ## Grafana
 
 Pour faire fonctionner Grafana, il faut utiliser Prometheus.    
