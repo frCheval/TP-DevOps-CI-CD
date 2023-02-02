@@ -79,6 +79,8 @@ services:
       - GF_SERVER_DOMAIN=localhost
     networks:
       - app-network
+    depends_on:
+      - prometheus-tp
     
 networks:
   app-network:
