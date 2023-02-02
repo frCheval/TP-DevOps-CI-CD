@@ -1,0 +1,8 @@
+#Launch proxy
+- name: Start proxy
+  docker_container:
+    name: devops-httpd-tp-1
+    image: fcheval/tp3-ansible-httpd-tp:1.0
+    ports:
+      - 80:80
+      - 8080:8080

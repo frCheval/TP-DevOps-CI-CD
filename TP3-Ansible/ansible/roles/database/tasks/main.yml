@@ -1,0 +1,13 @@
+#Creation of database
+- name: Create databse
+  docker_container:
+    name: devops-postgres-tp-1
+    image: fcheval/tp3-ansible-postgres-tp:1.0
+    networks:
+      - name: app_network
+    env:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./postgresql/data:/var/lib/postgresql/saved-data
+      - ./postgresql/pg-init-scripts:/docker-entrypoint-initdb.d

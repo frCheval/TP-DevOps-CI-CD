@@ -1,0 +1,13 @@
+- name: Start Backend 1
+  docker_container:
+    name: devops-backend-tp-1
+    image: fcheval/tp3-ansible-backend-tp:1.0
+    networks:
+      - name: app_network
+
+- name: Start Backend 2
+  docker_container:
+    name: devops-backend-tp-2
+    image: fcheval/tp3-ansible-backend-tp:1.0
+    networks:
+      - name: app_network

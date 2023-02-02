@@ -1,0 +1,7 @@
+#Start Frontend
+- name: Start Frontend
+  docker_container:
+    name: devops-frontend-tp-1
+    image: fcheval/tp3-ansible-frontend-tp
+    networks:
+      - name: app_network
