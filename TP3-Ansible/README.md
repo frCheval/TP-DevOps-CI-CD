@@ -2,11 +2,11 @@
 
 ## 1 Document your inventory and base commands
 
-Notre fichier inventories contient les informations qui nous permettent de nous connecter à notre serveur (après avoir correctement setup ansible en local sur notre (TD))
+Notre fichier inventories contient les informations qui nous permettent de nous connecter à notre serveur (après avoir correctement setup ansible en local sur notre (TD)).
 
-La variable ```ansible_user``` précise l'utilisateur avec lequel on souhaite effectuer une interaction avec la machine
+La variable ```ansible_user``` précise l'utilisateur avec lequel on souhaite effectuer une interaction avec la machine.
 
-La variable  ```ansible_ssh_private_key_file``` précise le chemin local de la clé privée qui permet de se connecter au serveur distant.
+La variable  ```ansible_ssh_private_key_file``` précise le chemin local de la clé privée qui permet de se connecter au serveur distant..
 
 Enfin la variable ``` hosts``` égale à ``` francois.cheval.takima.cloud``` correspond à l'adresse du serveur auquel on veut se connecter.
 
@@ -48,21 +48,22 @@ francois.cheval.takima.cloud | SUCCESS => {
 On peut aussi faire des modifications root sur le serveur en utilisant l'argument ```--become``` qui est l'équivalent d'un sudo.
 La commande ci-dessous permet par-exemple de supprimer le serveur apache de notre machine distante:
 ```ansible all -i inventories/setup.yml -m yum -a "name=httpd state=absent" --become```
+
 ## 2 Document your playbook
 
-Le playbook permet d'executer une suite de commande ou d'actions sur le serveur distant. Une fois crée et complété dans le bon répertoire, il s'utilise avec la commande suivante :
+Le playbook permet d'exécuter une suite de commandes ou d'actions sur le serveur distant. Une fois crée et complété dans le bon répertoire, il s'utilise avec la commande suivante :
 
 ```ansible-playbook -i inventories/setup.yml playbook.yml```
 
-Dans un premier temps, notre playbook est assez basique puisqu'il execute des commandes d'installation de docker sur la machine distante et vérifie la bonne installation.
+Dans un premier temps, notre playbook est assez basique puisqu'il exécute des commandes d'installation de docker sur la machine distante et vérifie la bonne installation.
 
-Cependant, nous pouvons aussi créer des roles, dont les actions sont détaillés dans le fichier main.yaml du repertoire tasks du repertoire qui porte le meme nom que le role, répertoire situé au même niveau que notre playbook.
+Cependant, nous pouvons aussi créer des roles, dont les actions sont détaillés dans le fichier main.yaml du répertoire tasks du répertoire qui porte le même nom que le role, répertoire situé au même niveau que notre playbook.
 
-La création d'un rôle se fait avec la commande suivante :
+La création d'un role se fait avec la commande suivante :
 
 ```ansible-galaxy init roles/docker```
 
-Cette commande par-exemple initie un rôle docker, dans lequel on va mettre les tâches d'installation et de vérifications de Docker sur la machine distante.
+Cette commande par-exemple initie un role docker, dans lequel on va mettre les tâches d'installation et de vérifications de Docker sur la machine distante.
 
 Le main.yaml de task du role docker ressemble alors à :
 ```yaml
@@ -113,9 +114,9 @@ On peut retirer ces tasks de notre playbook et rajouter une ligne en haut de cel
   roles:
     - docker
 ```
-A noter que si il y a plusieurs rôles, leurs têches respectives seront executés dans l'ordre de la liste, c'est-à-dire de haut en bas.
+A noter que si il y a plusieurs roles, leurs têches respectives seront executés dans l'ordre de la liste, c'est-à-dire de haut en bas.
 
-Pour la suite du TP nous avons crée les rôles backend, front, proxy, database et network. Notre playbook ressemble donc à :
+Pour la suite du TP nous avons crée les roles backend, front, proxy, database et network. Notre playbook ressemble donc à :
 
 ```yaml
 - hosts: all
@@ -150,7 +151,7 @@ Cela se fait à l'aide de la balise ```docker_container```.
 
 Les infos à rentrer sous cette balise sont globalement les mêmes que nous avons mises dans notre docker-compose. 
 
-Ainsi, on retrouve les variables d'environnement et pour le conteneur BDD :
+Ainsi, on retrouve les variables d'environnement et volumes pour le conteneur BDD :
 ```yaml
     env:
       POSTGRES_USER: postgres
@@ -186,13 +187,14 @@ Enfin, on peut aussi préciser les ports comme dans cette exemple pour le conten
 Le tout se relance avec la même commande que tout à l'heure :
 ```ansible-playbook -i inventories/setup.yml playbook.yml```
 
-Il faut faire preuve d'un peu de patience mais une fois l'ensemble des étapes réalisés, on peut tester la connexion à notre backend on utilisant le nom de notre serveur et le port 8080.
+Il faut faire preuve d'un peu de patience mais une fois l'ensemble des étapes réalisés, on peut tester la connexion à notre backend en utilisant le nom de notre serveur et le port 8080.
+
 # TP Extra
 
 ## Load Balancing
 
-Pour le load balancing, nous avons du apporter des modifications au docker httpd.   
-Pour cela nous avons modifier le fichier httpd.conf en ajoutant les lignes suivantes:
+Pour le load balancing, nous avons dû apporter des modifications au docker httpd.   
+Pour cela nous avons modifié le fichier httpd.conf en ajoutant les lignes suivantes:
 
 ```conf
 Listen 80
@@ -218,11 +220,11 @@ Listen 8080
 </VirtualHost>
 ```
 
-Avec cette configuration httpd de notre serveur Apache, on a definit notre serveur comme un proxy qui accepte les requetes provenant du conteneur frontend sur le port 80, et les requetes qui proviennent du backend sur le port 8080.
+Avec cette configuration httpd de notre serveur Apache, on a définit notre serveur comme un proxy qui accepte les requêtes provenant du conteneur frontend sur le port 80, et les requêtes qui proviennent du backend sur le port 8080.
 
-Pour le port 8080, on a définit un load balancer qui contient l'url de nos deux backends. Ainsi, on précise au proxy de préférer l'un des deux urls en fonction de la charge que recontre les backends, ou de leurs disponibilités.
+Pour le port 8080, on a définit un load balancer qui contient l'url de nos deux backends. Ainsi, on précise au proxy de préférer l'un des deux urls en fonction de la charge que recontrent les backends, ou de leurs disponibilités.
 
-De cette manière, notre serveur Apache est le seul conteneur qui doit avoir des ports exposé et il est en charge de toutes les redirections de requetes. On change donc les ports dans le docker-compose.yml de cette manière :
+De cette manière, notre serveur Apache est le seul conteneur qui doit avoir des ports exposés et il est en charge de toutes les redirections de requêtes. On change donc les ports dans le docker-compose.yml de cette manière :
 ```yaml
   httpd-tp:
     build: ./httpd
@@ -236,7 +238,7 @@ De cette manière, notre serveur Apache est le seul conteneur qui doit avoir des
       - postgres-tp
 ```
 
-On a aussi ajouté la création d'un second conteneur pour disposer de deux backend distinct,utilisant la même image et la même BDD. Cette ajout a aussi eu lieu dans le docker-compose :
+On a aussi ajouté la création d'un second conteneur pour disposer de deux backends distinct,utilisant la même image et la même BDD. Cette ajout a aussi eu lieu dans le docker-compose :
 
 ```yaml
   backend-tp-1:
@@ -260,7 +262,7 @@ On a aussi ajouté la création d'un second conteneur pour disposer de deux back
 ## Grafana
 
 Pour faire fonctionner Grafana, il faut utiliser Prometheus.    
-Nous avons donc rajouter Prometheus dans le application.yml de nos backend.
+Nous avons donc rajouté Prometheus dans le fichier application.yml de nos backends.
 
 ```yaml
  endpoints:
@@ -268,7 +270,7 @@ Nous avons donc rajouter Prometheus dans le application.yml de nos backend.
      exposure:
        include: health,info,env,metrics,beans,configprops,prometheus
 ```
-Aves les dependecies suivantes:
+Aves les dependencies suivantes:
 
 ```xml
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator -->
@@ -344,7 +346,3 @@ On peut ensuite accéder à Grafana à l'adresse http://localhost:3000/ et se co
 On rajoute ensuite un datasource Prometheus en allant dans Configuration > Data Sources > Add data source.   
 On ajoute l'adresse http://prometheus-tp:9090/ et on valide.    
 On peut ensuite créer un dashboard en allant dans Create > Dashboard > Add Query.
-
-
-
-

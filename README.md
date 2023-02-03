@@ -1,7 +1,7 @@
 # TP-DevOps-CI-CD
 Projet contenant l'ensemble des tps réalisés dans le cadre du cours de DevOps-CI-CD, au semestre 8.
 
-***Eleves*** : Francois Cheval et Gavier Gauchoux
+***Eleves*** : François Cheval et Gavier Gauchoux
 
 Lien vers les différents readme des TPs :
 - [TP1 (partie 1)](/TP1/README.md)
